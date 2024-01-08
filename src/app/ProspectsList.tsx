@@ -7,7 +7,7 @@ interface Prospect {
     title: string;
     email: string;
     phone: string;
-    
+    organization: string;
     // Add other relevant fields
   
     // Replace with actual ObjectId and data
@@ -18,7 +18,7 @@ interface Prospect {
     expected_close_date:  string; //new Date(),
     next_steps:  string; //'Schedule a product demo',
     notes:  string; //'Prospect showed interest in cloud solutions',
-    
+    last_updated: string;
   
   }
   
@@ -45,7 +45,7 @@ const ProspectsList: React.FC<ProspectsListProps> = ({ prospects }) => {
 
   if(prospects.length>0){
     return(<div>
-        <table className="table-auto w-full">
+        <table className="table w-full">
           <thead>
             <tr>
               <th className="px-4 py-2 text-left">Name</th>
@@ -64,7 +64,7 @@ const ProspectsList: React.FC<ProspectsListProps> = ({ prospects }) => {
           </thead>
           <tbody>
             {_prospects.map((prospect) => (
-              <tr key={prospect._id} className="align-text-top">
+              <tr key={prospect._id} className="align-text-top hover">
                 <td className="border px-4 py-2 text-left">{prospect.name}</td>
                 <td className="border px-4 py-2 text-left">{prospect.title}</td>
                 <td className="border px-4 py-2 text-left">{prospect.organization}</td>
