@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const SalesPipelineForm = () => {
+interface SalesPipelineFormProps {
+  onClose: () => void;
+}
+
+const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({ onClose }) => {
   //Load Organization
   const [organizations, setOrganizations] = useState([]);
   const [formData, setFormData] = useState({
@@ -14,7 +18,7 @@ const SalesPipelineForm = () => {
   });
 
   useEffect(() => {
-    axios.get('http://localhost:3001/api/prospects')
+    axios.get('http://localhost:3001/api/sales-pipeline')
       .then(response => setOrganizations(response.data))
       .catch(error => console.error('Error fetching Organizations:', error));
   }, []);
@@ -24,7 +28,7 @@ const SalesPipelineForm = () => {
     try {
       const response = await axios.post('http://localhost:3001/api/sales-pipeline', formData);
       console.log('SalesPipeline added:', response.data);
-
+      onClose();
       // Handle success (e.g., clear form, show message)
     } catch (error) {
       console.error('Error adding SalesPipeline:', error);
