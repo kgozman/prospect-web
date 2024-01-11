@@ -1,24 +1,25 @@
-import React from 'react';
-import styles from '../css/Modal.module.css'; // Import your modal CSS
+import React, { useRef } from 'react';
+import  '../css/Modal.css'; // Import your modal CSS
 
 interface ModalProps {
-  show: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  showModal: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ show, onClose, children }) => {
-  if (!show) {
+const Modal: React.FC<ModalProps> = ({onClose, children, showModal }) => {
+  const dialogRef = useRef(null);
+
+  if (!showModal) {
     return null;
   }
-
   return (
-    <div className={styles.modal} onClick={onClose}>
-      <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose}>×</button>
+    <dialog id="my_modal_1" className="modal"  open={true}>
+        <div className="modal-box">
         {children}
-      </div>
-    </div>
+        </div>
+    </dialog>
+
   );
 };
 

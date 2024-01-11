@@ -1,10 +1,11 @@
 'use client';
 import Image from 'next/image'
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ProspectsList from './ProspectsList';
 import SalesPipelineForm from './SalesPipelineForm';
 import Modal from  './components/Modal';
+import Nav from './components/Nav';
 
 export default function Home() {
 
@@ -13,9 +14,11 @@ export default function Home() {
 
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
-
+  const openModal = () => {setShowModal(true);}
+  const closeModal = () => {
+    console.log("Close Modal")
+    setShowModal(false);
+  }
   const [dataRefresh, setDataRefresh] = useState(false);
   const handleProspectAdded = () => {
     setDataRefresh(true);
@@ -42,15 +45,21 @@ export default function Home() {
       setDataRefresh(false); // Reset the flag
     }
   }, [dataRefresh]);
-
+  const dialogRef = useRef(null); 
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <ProspectsList prospects={prospects} />
-      <button onClick={openModal}>Add New Sales Pipeline</button>
-      <Modal show={showModal} onClose={closeModal}>
-        <SalesPipelineForm onClose={closeModal}/>
+    <div>
+      <Nav>
+        <button className="btn" onClick={openModal}>Add</button>
+      </Nav>
+      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        <ProspectsList prospects={prospects} />
+      </main>
+      <Modal showModal={showModal} onClose={closeModal}>
+          <h3 className="font-bold text-lg pl-0">New Prospect</h3>
+          <hr/><br/>
+          <SalesPipelineForm onClose={closeModal}/>
       </Modal>
-    </main>
+    </div>
   )
 }
