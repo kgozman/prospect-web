@@ -19,14 +19,16 @@ interface Prospect {
     next_steps:  string; //'Schedule a product demo',
     notes:  string; //'Prospect showed interest in cloud solutions',
     last_updated: string;
+
   
   }
   
 interface ProspectsListProps {
   prospects: Prospect[];
+  onEditProspect:{};
 }
-
-const ProspectsList: React.FC<ProspectsListProps> = ({ prospects }) => {
+const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: Prospect) => void }> = ({ prospects, onEditProspect }) => {
+//  const ProspectsList: React.FC<ProspectsListProps> = ({ prospects, onEditProspect }) => {
   /* const _prospects: Prospect[] = [
     { id: '1', name: 'John Doe', title: 'CEO' },
     { id: '2', name: 'Jane Smith', title: 'CTO' },
@@ -40,6 +42,7 @@ const ProspectsList: React.FC<ProspectsListProps> = ({ prospects }) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
   
+  const editProspect = 
   console.log("prospects")
   console.log(prospects)
 
@@ -64,7 +67,7 @@ const ProspectsList: React.FC<ProspectsListProps> = ({ prospects }) => {
           </thead>
           <tbody>
             {_prospects.map((prospect) => (
-              <tr key={prospect._id} className="align-text-top hover">
+              <tr key={prospect._id} className="align-text-top hover" onDoubleClick={() => onEditProspect(prospect)}>
                 <td className="border px-4 py-2 text-left">{prospect.name}</td>
                 <td className="border px-4 py-2 text-left">{prospect.title}</td>
                 <td className="border px-4 py-2 text-left">{prospect.organization}</td>

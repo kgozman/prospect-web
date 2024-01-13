@@ -11,19 +11,29 @@ export default function Home() {
 
   const [data, setData] = useState(null);
   const [prospects, setProspects] = useState([]);
+  
+  const [editingProspect, setEditingProspect] = useState(null);
+
 
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {setShowModal(true);}
   const closeModal = () => {
-    console.log("Close Modal")
+    console.log("Close Modal");
+    setEditingProspect(null);
     setShowModal(false);
   }
   const [dataRefresh, setDataRefresh] = useState(false);
   const handleProspectAdded = () => {
     setDataRefresh(true);
   };
-  
+  const handleEditProspect = (prospect: React.SetStateAction<null>) => {
+    console.log("handleEditProspect");
+    console.log(prospect)
+    setEditingProspect(prospect); // Set the prospect to be edited
+    openModal(); // Open the modal with the form
+  };
+
   useEffect( () => {                                                                                                                                                                                 
     const fetchData = async () => {
       console.log("response.data")
@@ -53,12 +63,12 @@ export default function Home() {
         <button className="btn" onClick={openModal}>Add</button>
       </Nav>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <ProspectsList prospects={prospects} />
+        <ProspectsList prospects={prospects} onEditProspect={handleEditProspect} />
       </main>
       <Modal showModal={showModal} onClose={closeModal}>
-          <h3 className="font-bold text-lg pl-0">New Prospect</h3>
+          <h3 className="font-bold text-lg pl-0">{editingProspect ? 'Edit Prospect' : 'New Prospect'}</h3>
           <hr/><br/>
-          <SalesPipelineForm onClose={closeModal}/>
+          <SalesPipelineForm initialData={editingProspect} onClose={closeModal} prospects={prospects} setProspects={setProspects}/>
       </Modal>
     </div>
   )

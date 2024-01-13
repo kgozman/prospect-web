@@ -5,16 +5,20 @@ import axios from "axios";
 
 interface SalesPipelineFormProps {
   onClose: () => void;
+  initialData?: null;
   children?: React.ReactNode;
+  prospects: [];
+  setProspects: Dispatch<SetStateAction<never[]>>;
 }
 
 const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   onClose,
   children,
+  initialData,
+  setProspects,
+  prospects,
 }) => {
-  //Load Organization
-  const [organizations, setOrganizations] = useState([]);
-  const [formData, setFormData] = useState({
+  const initialState = {
     prospect_id: "",
     stage: "",
     name: "",
@@ -27,44 +31,77 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
     expected_close_date: "",
     next_steps: "",
     notes: "",
-  });
+    _id: '',
+  };
+
+  //Load Organization
+  const [organizations, setOrganizations] = useState([]);
+
+  // Use initialData if provided, otherwise use initialState
+  const [formData, setFormData] =useState(initialData || initialState)
 
   const [expectedCloseDate, setExpectedCloseDate] = useState();
+
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/api/sales-pipeline")
       .then((response) => setOrganizations(response.data))
       .catch((error) => console.error("Error fetching Organizations:", error));
+  
   }, []);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/sales-pipeline",
-        formData
-      );
-      console.log("SalesPipeline added:", response.data);
+      if (initialData) {
+        console.log("Initial Data");
+        console.log(initialData);
+        const response = await axios.put(
+          `http://localhost:3001/api/sales-pipeline/${initialData._id}`,
+          formData
+        );
+        console.log("SalesPipeline updated:", response.data);
+      } else {
+        const response = await axios.post(
+          "http://localhost:3001/api/sales-pipeline",
+          formData
+        );
+        console.log("SalesPipeline added:", response.data);
+      }
       onClose();
       // Handle success (e.g., clear form, show message)
+
     } catch (error) {
       console.error("Error adding SalesPipeline:", error);
       // Handle error (e.g., show error message)
     }
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: { target: { name: any; value: any; }; }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleDateChange = (event: { target: { name: any; value: any } }) => {
     console.log(event);
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-  const handleCancel = (event) => {
+  const handleCancel = (event: any) => {
     console.log("handle cancel");
     onClose();
   };
+
+  const handleDeleteProspect = async (id) => {
+    console.log(id)
+    try {
+      await axios.delete(`http://localhost:3001/api/sales-pipeline/${id}`);
+      // Update the UI by removing the deleted item from the state
+      setProspects(prospects?.filter(prospect => prospect.id !== id));
+    } catch (error) {
+      console.error("Error deleting prospect:", error);
+      // Handle error (e.g., show error message)
+    }
+  };
+
   const getClassNames = (type: string = "") => {
     let baseClass = "";
 
@@ -242,8 +279,11 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
 
           <div className="modal-action">
             <button className="btn" type="submit" onClick={handleSubmit}>
-              Add
+            {initialData ? 'Save Changes' : 'Save New Prospect'}
+              
             </button>
+            <button onClick={() => handleDeleteProspect(formData._id)}>Delete</button>
+
             <button className="btn" onClick={handleCancel}>
               Cancel
             </button>
