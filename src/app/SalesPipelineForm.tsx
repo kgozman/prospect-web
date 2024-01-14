@@ -26,7 +26,7 @@ interface InitialData {
   note: string; //first note
   notes: Note[];
   newNote: string;
-  existingNotes: Note[];x
+  existingNotes: Note[];
 }
 
 interface SalesPipelineFormProps {
@@ -181,9 +181,10 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   const handleDeleteProspect = async (id: any) => {
     console.log(id);
     try {
-      await axios.delete(`http://localhost:3001/api/sales-pipeline/${id}`);
+      const response = await axios.delete(`http://localhost:3001/api/sales-pipeline/${initialData._id}`);
       // Update the UI by removing the deleted item from the state
       setProspects(prospects?.filter((prospect) => prospect.id !== id));
+      onClose();
     } catch (error) {
       console.error("Error deleting prospect:", error);
       // Handle error (e.g., show error message)
@@ -237,7 +238,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   };
 
   const addNewNote = () => {
-    const newNote = { content: "", createdAt: new Date(), isEditing: true };
+    const newNote = { content: formData.newNote, createdAt: new Date(), isEditing: true };
     setFormData({ ...formData, notes: [...formData.notes, newNote] });
   };
   return (
@@ -416,94 +417,60 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
                 value={formData.newNote}
                 onChange={handleNewNote}
                 className={getClassNames("input")}
-                placeholder="Notes"
+                placeholder="Create a Note"
               />
             )}
           </div>
-        </div>
-        <div className="flex flex-wrap -mx-3 mb-12">
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-12">
           {initialData ? (
-            Array.isArray(formData.notes) &&
-            formData.notes.map((note, index) => (
-              <NoteComponent
-                key={index}
-                note={note}
-                index={index}
-                handleNoteChange={handleNoteChange}
-                toggleNoteEditing={toggleNoteEditing}
-              />
-            ))
-          ) : (
-            <></>
-          )}
-          {children}
-
-          <div className="modal-action">
-            {/* If this is edit, then the option is to append add a new note */}
-            {initialData ? (
-              <>
-                <textarea
-                  name="notes"
-                  value={formData.newNote}
-                  onChange={handleNewNote}
-                  className={getClassNames("input")}
-                  placeholder="Notes"
-                />
-                <button onClick={addNewNote}>Add Note</button>
-              </>
-            ) : (
-              <></>
-            )}
-
-            {initialData
-              ? Array.isArray(formData.notes) &&
-                formData.notes.map((note, index) => (
-                  <NoteComponent
-                    key={index}
-                    note={note}
-                    index={index}
-                    handleNoteChange={handleNoteChange}
-                    toggleNoteEditing={toggleNoteEditing}
+                <>
+                  <textarea
+                    name="notes"
+                    value={formData.newNote}
+                    onChange={handleNewNote}
+                    className={getClassNames("input")}
+                    placeholder="Notes"
                   />
-                ))
-              : ""}
-            {children}
-          </div>
-          <div className="modal-action">
-            {/* If this is edit, then the option is to append add a new note */}
-            {initialData ? (
-              <button onClick={addNewNote}>Add Note</button>
-            ) : (
-              <></>
-            )}
-            {/* 
-            <button className="btn" type="submit" onClick={handleSubmit}>
-              {initialData ? "Save Changes" : "Save New Prospect"}
-            </button> */}
 
-            {initialData ? (
-              <button className="btn" type="submit" onClick={handleEditSubmit}>
-                Save Changes
-              </button>
-            ) : (
-              <button className="btn" type="submit" onClick={handleNewSubmit}>
-                Create Lead
-              </button>
-            )}
-
-            {initialData ? (
-              <button onClick={() => handleDeleteProspect(formData._id)}>
-                Delete
-              </button>
+                </>
               ) : (
-                ""
-            )}
-
-            <button className="btn" onClick={handleCancel}>
-              Cancel
-            </button>
-          </div>
+                <></>
+              )}
         </div>
+
+          <div className="flex flex-wrap -mx-3 mb-12">
+            <div className="modal-action">
+              {/* If this is edit, then the option is to append add a new note */}
+
+              {/* 
+              <button className="btn" type="submit" onClick={handleSubmit}>
+                {initialData ? "Save Changes" : "Save New Prospect"}
+              </button> */}
+
+              {initialData ? (
+                <button className="btn" type="submit" onClick={handleEditSubmit}>
+                  Save Changes
+                </button>
+              ) : (
+                <button className="btn" type="submit" onClick={handleNewSubmit}>
+                  Create Lead
+                </button>
+              )}
+
+              {initialData ? (
+                <button className="btn" onClick={() => handleDeleteProspect(formData._id)}>
+                  Delete
+                </button>
+                ) : (
+                  ""
+              )}
+
+              <button className="btn" onClick={handleCancel}>
+                Cancel
+              </button>
+            </div>
+          </div>
       </form>
     </>
   );
