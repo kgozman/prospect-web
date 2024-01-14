@@ -1,4 +1,5 @@
 import React, { Key } from 'react';
+import { FaRegStickyNote } from 'react-icons/fa';
 
 interface Prospect {
     _id: Key | null | undefined;
@@ -17,7 +18,7 @@ interface Prospect {
     probability: string; // 60,
     expected_close_date:  string; //new Date(),
     next_steps:  string; //'Schedule a product demo',
-    notes:  string; //'Prospect showed interest in cloud solutions',
+    notes:  null; //'Prospect showed interest in cloud solutions',
     last_updated: string;
 
   
@@ -41,6 +42,8 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute:'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
+  debugger;
+
   
   const editProspect = 
   console.log("prospects")
@@ -78,7 +81,17 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
                 <td className="border px-4 py-2 text-right">{prospect.probability}</td>
                 <td className="border px-4 py-2 text-left">{ formatDate(prospect.expected_close_date) }</td>
                 <td className="border px-4 py-2 text-left">{prospect.next_steps}</td>
-                <td className="border px-4 py-2 text-left">{prospect.notes}</td>
+                <td className="border px-4 py-2 text-left">
+                  {
+                  }
+
+                  {Array.isArray(prospect.notes) ?
+                    <FaRegStickyNote className="text-1xl text-blue-500" />
+                  :
+                    <></>
+                  }
+                </td> 
+                {/* <td className="border px-4 py-2 text-left">{prospect.notes}</td> */}
                 <td className="border px-4 py-2 text-left">{prospect.last_updated}</td>
               </tr>
             ))}
@@ -89,5 +102,6 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
   }
   return (`Empty List`);
 };
+
 
 export default ProspectsList;

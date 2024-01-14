@@ -36,7 +36,6 @@ export default function Home() {
 
   useEffect( () => {                                                                                                                                                                                 
     const fetchData = async () => {
-      console.log("response.data")
       try {
         const response = await axios.get('http://localhost:3001/api/sales-pipeline');
         setProspects( response.data);
@@ -59,7 +58,7 @@ export default function Home() {
 
   return (
     <div>
-      <Nav>
+      <Nav openModal={openModal}>
         <button className="btn" onClick={openModal}>Add</button>
       </Nav>
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
