@@ -408,17 +408,17 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
             )}
           </div>
           <div className="flex flex-wrap -mx-3 mb-12">
-            {initialData ? 
+            {initialData ? (
               <></>
-              :
+            ) : (
               <textarea
                 name="notes"
                 value={formData.newNote}
-                onChange={handleChange}
+                onChange={handleNewNote}
                 className={getClassNames("input")}
                 placeholder="Notes"
               />
-            }
+            )}
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-12">
@@ -434,39 +434,39 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               />
             ))
           ) : (
-            <textarea
-              name="newNote"
-              onChange={handleNewNote}
-              placeholder="Add a new note..."
-            />
+            <></>
           )}
           {children}
 
           <div className="modal-action">
             {/* If this is edit, then the option is to append add a new note */}
             {initialData ? (
-              <button onClick={addNewNote}>Add Note</button>
+              <>
+                <textarea
+                  name="notes"
+                  value={formData.newNote}
+                  onChange={handleNewNote}
+                  className={getClassNames("input")}
+                  placeholder="Notes"
+                />
+                <button onClick={addNewNote}>Add Note</button>
+              </>
             ) : (
               <></>
             )}
 
-            {initialData ? (
-              Array.isArray(formData.notes) &&
-              formData.notes.map((note, index) => (
-                <NoteComponent
-                  key={index}
-                  note={note}
-                  index={index}
-                  handleNoteChange={handleNoteChange}
-                  toggleNoteEditing={toggleNoteEditing}
-                />
-              ))
-            ) : (
-              <NoteComponent
-                handleNoteChange={handleNoteChange}
-                toggleNoteEditing={toggleNoteEditing}
-              />
-            )}
+            {initialData
+              ? Array.isArray(formData.notes) &&
+                formData.notes.map((note, index) => (
+                  <NoteComponent
+                    key={index}
+                    note={note}
+                    index={index}
+                    handleNoteChange={handleNoteChange}
+                    toggleNoteEditing={toggleNoteEditing}
+                  />
+                ))
+              : ""}
             {children}
           </div>
           <div className="modal-action">
@@ -476,10 +476,10 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
             ) : (
               <></>
             )}
-
+            {/* 
             <button className="btn" type="submit" onClick={handleSubmit}>
               {initialData ? "Save Changes" : "Save New Prospect"}
-            </button>
+            </button> */}
 
             {initialData ? (
               <button className="btn" type="submit" onClick={handleEditSubmit}>
@@ -491,9 +491,13 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               </button>
             )}
 
-            <button onClick={() => handleDeleteProspect(formData._id)}>
-              Delete
-            </button>
+            {initialData ? (
+              <button onClick={() => handleDeleteProspect(formData._id)}>
+                Delete
+              </button>
+              ) : (
+                ""
+            )}
 
             <button className="btn" onClick={handleCancel}>
               Cancel
