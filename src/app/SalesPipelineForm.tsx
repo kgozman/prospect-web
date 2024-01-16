@@ -211,6 +211,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   };
 
   const getClassNames = (type: string = "") => {
+
     let baseClass = "";
 
     if (type === "input") {
@@ -221,7 +222,12 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
       return `${baseClass} block uppercase tracking-wide text-gray-500 text-xs font-bold mb-2 dark:text-white`;
     } else if (type === "email") {
       return `${baseClass} bg-gray-100`;
+    } else if (type === "notesCreated"){
+      return `${baseClass} text-sm`;
+    } else if (type === "notesContent"){
+      return `${baseClass} text-lg`;
     }
+    
     // ... other conditions
 
     return baseClass;
@@ -396,19 +402,24 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               <br />
             </p>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-12">
+          <div className="flex flex-wrap -mx-3 mb-4">
             {initialData ? (
               Array.isArray(formData.notes) &&
               formData.notes.map((note, index) => (
-                <div key={index}>
-                  {note.content} | Created: {note.createdAt}
+                <div key={index} className="w-full mb-5">
+                  <div className={getClassNames("notesContent")}>
+                    {note.content}<br/>
+                    <label className={getClassNames("notesCreated")}>
+                      Created: {note.createdAt}
+                    </label>
+                  </div>
                 </div>
               ))
             ) : (
               <></>
             )}
           </div>
-          <div className="flex flex-wrap -mx-3 mb-12">
+          <div className="flex flex-wrap -mx-3 mb-4">
             {initialData ? (
               <></>
             ) : (
