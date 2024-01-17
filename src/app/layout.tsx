@@ -14,6 +14,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
+  // Example to set a light background and dark text
+  document.body.style.backgroundColor = 'white';
+  document.body.style.color = 'black';
+  
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
