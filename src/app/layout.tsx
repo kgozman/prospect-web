@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { useRef } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,9 +17,14 @@ export default function RootLayout({
 }) {
 
   // Example to set a light background and dark text
-  document.body.style.backgroundColor = 'white';
-  document.body.style.color = 'black';
-  
+  /*
+  const bodyStyles= useRef();
+   {
+    backgroundColor:'white',
+    color: 'black'
+  }
+  */
+
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>

@@ -42,8 +42,6 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
     const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute:'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-  debugger;
-
   
   const editProspect = 
   console.log("prospects")
@@ -54,7 +52,7 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
         <table className="table w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2 text-left">Contact</th>
+              <th className="px-4 py-2 text-left border-l-0">Contact</th>
               <th className="px-4 py-2 text-left">Stage</th>
               <th className="px-4 py-2 text-left">Est.</th>
               <th className="px-4 py-2 text-left">Prob</th>
@@ -64,8 +62,8 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
           </thead>
           <tbody>
             {_prospects.map((prospect) => (
-              <tr key={prospect._id} className="align-text-top hover" onDoubleClick={() => onEditProspect(prospect)}>
-                <td className="border px-4 py-2 text-left">
+              <tr key={prospect._id} className="align-text-top border-l-0 hover" onDoubleClick={() => onEditProspect(prospect)}>
+                <td className="border px-4 py-2 text-left border-l-0">
                   {prospect.name} - {prospect.title}<br/>
                   <h2 className="large-text">{prospect.organization}</h2>
                   {prospect.email}<br/>
