@@ -223,9 +223,11 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
     } else if (type === "email") {
       return `${baseClass} bg-gray-100`;
     } else if (type === "notesCreated"){
-      return `${baseClass} text-sm`;
+      return `${baseClass} text-sm italic text-right`;
+    } else if (type === "notesCreatedLabel"){
+      return `${baseClass} text-right w-full float-right italic text-sm text-grey-100 opacity-20`;
     } else if (type === "notesContent"){
-      return `${baseClass} text-lg`;
+      return `${baseClass} text-lg border-b-1`;
     }
     
     // ... other conditions
@@ -389,7 +391,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               />
             </div>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-12">
+          <div className="flex flex-wrap -mx-3 mb-12 border-b border-t-1 border-b-1">
             <label
               className={getClassNames("label")}
               htmlFor="expected_close_date"
@@ -402,14 +404,14 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               <br />
             </p>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-4">
+          <div className="flex flex-wrap -mx-3 mb-4 border-b border-t-1">
             {initialData ? (
               Array.isArray(formData.notes) &&
               formData.notes.map((note, index) => (
-                <div key={index} className="w-full mb-5">
+                <div key={index} className="w-full mb-5 border-b border-t-1 border-grey-700">
                   <div className={getClassNames("notesContent")}>
                     {note.content}<br/>
-                    <label className={getClassNames("notesCreated")}>
+                    <label className={getClassNames("notesCreatedLabel")}>
                       Created: {note.createdAt}
                     </label>
                   </div>
@@ -419,7 +421,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               <></>
             )}
           </div>
-          <div className="flex flex-wrap -mx-3 mb-4">
+          <div className="flex flex-wrap -mx-3 mb-4 border-b-1">
             {initialData ? (
               <></>
             ) : (
@@ -433,7 +435,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
             )}
           </div>
           </div>
-          <div className="flex flex-wrap -mx-3 mb-12">
+          <div className="flex flex-wrap -mx-3 mb-12 border-t-1">
           {initialData ? (
                 <>
                   <textarea

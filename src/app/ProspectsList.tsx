@@ -52,39 +52,39 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
         <table className="table w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2 text-left border-l-0">Contact</th>
-              <th className="px-4 py-2 text-left">Stage</th>
-              <th className="px-4 py-2 text-left">Est.</th>
-              <th className="px-4 py-2 text-left">Prob</th>
-              <th className="px-4 py-2 text-left">Exp Close</th>
-              <th className="px-4 py-2 text-left">Notes</th>
+              <th className="px-4 py-2 text-left border-l-0 border-r-0">Contact</th>
+              <th className="px-4 py-2 text-left border-l-0 border-r-0">Stage</th>
+              <th className="px-4 py-2 text-left border-l-0 border-r-0">Est.</th>
+              <th className="px-4 py-2 text-left border-l-0 border-r-0">Prob</th>
+              <th className="px-4 py-2 text-left border-l-0 border-r-0">Exp Close</th>
+              <th className="px-4 py-2 text-left border-l-0 border-r-0">Notes</th>
             </tr>
           </thead>
           <tbody>
             {_prospects.map((prospect) => (
-              <tr key={prospect._id} className="align-text-top border-l-0 hover" onDoubleClick={() => onEditProspect(prospect)}>
-                <td className="border px-4 py-2 text-left border-l-0">
+              <tr key={prospect._id} className="align-text-top border-l-0 hover bor" onDoubleClick={() => onEditProspect(prospect)}>
+                <td className="border px-4 py-2 text-left  border-l-0 border-r-0">
                   {prospect.name} - {prospect.title}<br/>
-                  <h2 className="large-text">{prospect.organization}</h2>
+                  <h1 className="large-text">{prospect.organization}</h1>
                   {prospect.email}<br/>
                   {prospect.phone}<br/>                
                 </td>
                 {/* <td className="border px-4 py-2 text-left">{prospect.title}</td>
-                <td className="border px-4 py-2 text-left">{prospect.organization}</td>
-                <td className="border px-4 py-2 text-left">{prospect.email}</td>
-                <td className="border px-4 py-2 text-left">{prospect.phone}</td> */}
-                <td className="border px-4 py-2 text-left">{prospect.stage}</td>
-                <td className="border px-4 py-2 text-right">{prospect.estimated_value}</td>
-                <td className="border px-4 py-2 text-right">{prospect.probability}</td>
-                <td className="border px-4 py-2 text-left">{formatDate(prospect.expected_close_date) }</td>
-                <td className="border px-4 py-2 text-left">
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">{prospect.organization}</td>
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">{prospect.email}</td>
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">{prospect.phone}</td> */}
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">{prospect.stage}</td>
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-right">{prospect.estimated_value}</td>
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-right">{prospect.probability}</td>
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">{formatDate(prospect.expected_close_date) }</td>
+                <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">
+                  Updated: {prospect.last_updated}<br/>
                   Next Steps:{prospect.next_steps}<br/>
                   {Array.isArray(prospect.notes) ?
                     <FaRegStickyNote className="text-1xl text-blue-500" />
                   :
                     <></>
                   }
-                  Updated: {prospect.last_updated}
                 </td> 
               </tr>
             ))}
