@@ -64,10 +64,17 @@ const ProspectsList: React.FC<ProspectsListProps & { onEditProspect: (prospect: 
             {_prospects.map((prospect) => (
               <tr key={prospect._id} className="align-text-top border-l-0 hover bor" onDoubleClick={() => onEditProspect(prospect)}>
                 <td className="border px-4 py-2 text-left  border-l-0 border-r-0">
-                  {prospect.name} - {prospect.title}<br/>
+
+                  <div className="opacity-50">
+                    {prospect.name} - {prospect.title}<br/>
+                  </div>
+                  <div className="font-bold">
                   <h1 className="large-text">{prospect.organization}</h1>
-                  {prospect.email}<br/>
-                  {prospect.phone}<br/>                
+                  </div>
+                  <div className="opacity-65">
+                    {prospect.email}<br/>
+                    {prospect.phone}<br/>
+                  </div>
                 </td>
                 {/* <td className="border px-4 py-2 text-left">{prospect.title}</td>
                 <td className="border  border-l-0 border-r-0 px-4 py-2 text-left">{prospect.organization}</td>

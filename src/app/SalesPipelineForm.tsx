@@ -365,14 +365,19 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               >
                 Expected Close Date
               </label>
-              <input
+              <Datepicker 
+                id=""
+                selected={formData.expected_close_date}
+                onChange={handleDateChange}
+              />
+              {/* <input
                 className={getClassNames("input")}
                 title="Expected Close Date"
                 name="expected_close_date"
-                value={formData.expected_close_date}
+                selected={formData.expected_close_date}
                 onChange={handleChange}
                 placeholder=""
-              />
+              /> */}
             </div>
             <div className="w-full md:w-1/2 px-2 mb-12 md:mb-0">
               <label
@@ -382,8 +387,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
                 Next Steps
               </label>
 
-              <input
-                name="next_steps"
+              <input                name="next_steps"
                 value={formData.next_steps}
                 onChange={handleChange}
                 className={getClassNames("input")}
