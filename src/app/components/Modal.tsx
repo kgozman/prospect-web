@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({onClose, children, showModal }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: { target: any; }) => {
-      debugger;
+      // debugger;
       if (dialogRef.current && !dialogRef.current.contains(event.target)) {
         onClose();
       }

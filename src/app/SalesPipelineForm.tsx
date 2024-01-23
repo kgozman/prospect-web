@@ -76,7 +76,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   // Use initialData if provided, otherwise use initialState
   const [formData, setFormData] = useState(initialData || initialState);
 
-  const [expectedCloseDate, setExpectedCloseDate] = useState();
+  const [expDate, setExpDate] = useState();
 
   useEffect(() => {
     axios
@@ -114,6 +114,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   //Handle New Sales Lead
   const handleNewSubmit = async (event: { preventDefault: () => void }) => {
     debugger;
+    setFormData({ ...formData, [event.target.name]: event.target.value });
     event.preventDefault();
     try {
       if (initialData) {
@@ -170,8 +171,11 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
   const handleDateChange = (event: { target: { name: any; value: any } }) => {
-    console.log(event);
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    // setExpDate(date)
+    console.log("handleDateChange Event.target.value:");  
+    console.log(event.target.value);  
+    debugger;  
+    setFormData({ ...formData, ["expected_close_date"]: event.target.value });
   };
   const handleCancel = (event: any) => {
     console.log("handle cancel");
@@ -249,6 +253,8 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
     const newNote = { content: formData.newNote, createdAt: new Date(), isEditing: true };
     setFormData({ ...formData, notes: [...formData.notes, newNote] });
   };
+
+  const expDateRef = useRef(null)
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full max-w-lg" method="modal">
@@ -366,8 +372,8 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
                 Expected Close Date
               </label>
               <Datepicker 
-                id=""
-                selected={formData.expected_close_date}
+                
+                name="expected_close_date"
                 onChange={handleDateChange}
               />
               {/* <input
