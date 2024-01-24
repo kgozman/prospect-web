@@ -170,14 +170,25 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   const handleChange = (event: { target: { name: any; value: any } }) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
-  const handleDateChange = (event: { target: { name: any; value: any } }) => {
-    // setExpDate(date)
-    console.log("handleDateChange Event.target.value:");  
-    console.log(event.target.value);  
-    debugger;  
-    setFormData({ ...formData, ["expected_close_date"]: event.target.value });
+  const handleDateChange = (newDate:Date | null) => {
+
+    // const newDate = new Date(event.target.value);
+    // setExpDate(newDate.toString());s
+    // debugger;
+    
+    
+    // (date:Date) => {
+    // console.log("date");
+    // console.log(date);
+    // setExpDate(date);
+    // // event: { target: { name: any; value: any } }) => {
+    // // setExpDate(date)
+    // console.log("handleDateChange Event.target.value:");  
+    // // console.log(event.target.value);  
+    // // debugger;  
+    setFormData({ ...formData, expected_close_date: newDate ? newDate.toDateString() : ''});
   };
-  const handleCancel = (event: any) => {
+  const handleCancel = (o: any) => {
     console.log("handle cancel");
     onClose();
   };
@@ -255,6 +266,10 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
   };
 
   const expDateRef = useRef(null)
+
+  console.log("selected={formData.expected_close_date ? new Date(formData.expected_close_date) : null}");
+  console.log(formData.expected_close_date ? new Date(formData.expected_close_date) : null);
+  console.log("-------------------------------")
   return (
     <>
       <form onSubmit={handleSubmit} className="w-full max-w-lg" method="modal">
@@ -372,9 +387,11 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
                 Expected Close Date
               </label>
               <Datepicker 
-                
                 name="expected_close_date"
-                onChange={handleDateChange}
+                selected={formData.expected_close_date ? new Date(formData.expected_close_date).toDateString().split('T')[0] : null}
+                value={formData.expected_close_date ? new Date(formData.expected_close_date).toDateString().split('T')[0] : null}
+                onSelectedDateChanged={handleDateChange}
+                placeholder="Select date"
               />
               {/* <input
                 className={getClassNames("input")}
