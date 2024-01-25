@@ -389,7 +389,7 @@ const SalesPipelineForm: React.FC<SalesPipelineFormProps> = ({
               <Datepicker 
                 name="expected_close_date"
                 selected={formData.expected_close_date ? new Date(formData.expected_close_date).toDateString().split('T')[0] : null}
-                value={formData.expected_close_date ? new Date(formData.expected_close_date).toDateString().split('T')[0] : null}
+                value={formData.expected_close_date?new Date(formData.expected_close_date).toDateString():null}
                 onSelectedDateChanged={handleDateChange}
                 placeholder="Select date"
               />

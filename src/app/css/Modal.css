@@ -28,4 +28,8 @@
     font-size: 20px;
     cursor: pointer;
   }
-  
+  .left-0 {
+    right: 6px;
+    top: 10px;
+    left: auto;
+}
